@@ -33,7 +33,7 @@ int main()
 			break;
 		case 2:
 			cout << "Количество ребер графа: " << endl;
-			cout << "not implemented" << endl;
+			cout << graph.e() << endl;
 			break;
 		case 3:
 			cout << "Вставить ребро. Введите v1, v2:" << endl;
@@ -43,7 +43,7 @@ int main()
 		case 4:
 			cout << "Удалить ребро. Введите v1, v2:" << endl;
 			cin >> v1; cin >> v2;
-			cout << "not implemented" << endl;
+			graph.del(v1, v2);
 			break;
 		case 5:
 			cout << "Наличие ребра. Введите v1, v2:" << endl;

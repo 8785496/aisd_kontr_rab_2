@@ -8,7 +8,12 @@ int graph::v()
 
 int graph::e()
 {
-	return 0;
+	int count = 0;
+	for (int i = 0; i < countVertex; i++)
+	{
+		count += vertices[i].size();
+	}
+	return count / 2;
 }
 
 void graph::insert(int v1, int v2)
@@ -22,8 +27,25 @@ void graph::insert(int v1, int v2)
 
 void graph::del(int v1, int v2)
 {
-
-
+	if (findEdge(v1, v2))
+	{
+		for (auto i = vertices[v1].begin(); i < vertices[v1].end(); ++i)
+		{
+			if ((*i).vertex == v2)
+			{
+				vertices[v1].erase(i);
+				break;
+			}
+		}
+		for (auto i = vertices[v2].begin(); i < vertices[v2].end(); ++i)
+		{
+			if ((*i).vertex == v1)
+			{
+				vertices[v2].erase(i);
+				break;
+			}
+		}
+	}
 }
 
 bool graph::findEdge(int v1, int v2)
