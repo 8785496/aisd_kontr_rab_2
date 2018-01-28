@@ -15,14 +15,15 @@ int main()
 	cout << "  3 - вставить ребро" << endl;
 	cout << "  4 - удалить ребро" << endl;
 	cout << "  5 - наличие ребра" << endl;
-	cout << "  6 - задать вес ребру" << endl;
-	cout << "  7 - вывести структуру графа" << endl << endl;
+	cout << "  6 - задать параметр ребру" << endl;
+	cout << "  7 - вывести структуру графа" << endl;
+	cout << "  8 - заполнить граф тестовыми данными" << endl << endl;
 
-	graph graph(10);
+	Graph<int, int> graph(10);
 	while (true)
 	{
 		cout << ">> ";
-		int command, v1, v2, data;
+		int command, v1, v2, weight, data;
 		cin >> command;
 		switch (command)
 		{
@@ -32,18 +33,17 @@ int main()
 			cout << "Количество вершин графа: " << graph.v() << endl;
 			break;
 		case 2:
-			cout << "Количество ребер графа: " << endl;
-			cout << graph.e() << endl;
+			cout << "Количество ребер графа: " << graph.e() << endl;
 			break;
 		case 3:
-			cout << "Вставить ребро. Введите v1, v2:" << endl;
-			cin >> v1; cin >> v2;
-			graph.insert(v1, v2);
+			cout << "Вставить ребро. Введите v1, v2, weight:" << endl;
+			cin >> v1; cin >> v2; cin >> weight;
+			cout << (graph.insert(v1, v2, weight) ? "Ребро добавлено" : "Ребро не добавлено") <<endl ;
 			break;
 		case 4:
 			cout << "Удалить ребро. Введите v1, v2:" << endl;
 			cin >> v1; cin >> v2;
-			graph.del(v1, v2);
+			cout << (graph.remove(v1, v2) ? "Ребро удалено" : "Ребро не удалено") << endl;
 			break;
 		case 5:
 			cout << "Наличие ребра. Введите v1, v2:" << endl;
@@ -51,12 +51,17 @@ int main()
 			cout << (graph.findEdge(v1, v2) ? "Ребро найдено" : "Ребро не найдено") << endl;
 			break;
 		case 6:
-			cout << "Задать вес ребру. Введите v1, v2, data:" << endl;
+			cout << "Задать параметр ребру. Введите v1, v2, data:" << endl;
 			cin >> v1; cin >> v2; cin >> data;
-			graph.setEdge(v1, v2, data);
+			cout << (graph.setEdge(v1, v2, data) ? "Значение задано" : "Значение не задано") << endl;
 			break;
 		case 7:
-			cout << "Структура графа:" << endl;
+			cout << "Вывести структуру графа:" << endl;
+			graph.printStructure();
+			break;
+		case 8:
+			graph.insert(0, 5, 10);
+			graph.insert(0, 9, 3);
 			graph.printStructure();
 			break;
 		default:

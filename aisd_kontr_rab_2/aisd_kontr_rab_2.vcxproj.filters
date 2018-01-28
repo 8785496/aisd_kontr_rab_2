@@ -18,9 +18,6 @@
     <ClCompile Include="aisdkontrrab2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graph.h">
