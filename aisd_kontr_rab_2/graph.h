@@ -27,6 +27,7 @@ private:
 	int countVertex;
 	Edge **vertices;
 public:
+	const W MAX_WEIGHT = (W)10000;
 	int v() // количество вершин графа
 	{
 		return countVertex;
@@ -45,7 +46,7 @@ public:
 			}
 			count += c;
 		}
-		return count / 2;
+		return count;
 	};
 	bool insert(int v1, int v2, W weight)
 	{
@@ -65,19 +66,6 @@ public:
 				edge = edge->next;
 			}
 			edge->next = new Edge(v2, weight);
-		}
-		if (vertices[v2] == nullptr)
-		{
-			vertices[v2] = new Edge(v1, weight);
-		}
-		else
-		{
-			Edge *edge = vertices[v2];
-			while (edge->next != nullptr)
-			{
-				edge = edge->next;
-			}
-			edge->next = new Edge(v1, weight);
 		}
 		return true;
 	};
@@ -105,30 +93,7 @@ public:
 					cur->next = nullptr;
 					delete cur;
 				}
-
-				Edge *cur2 = vertices[v2];
-				Edge *prev2 = nullptr;
-				while (cur2 != nullptr)
-				{
-					if (cur2->vertex == v1)
-					{
-						if (prev2 == nullptr)
-						{
-							vertices[v2] = cur2->next;
-							cur2->next = nullptr;
-							delete cur2;
-						}
-						else
-						{
-							prev2->next = cur2->next;
-							cur2->next = nullptr;
-							delete cur2;
-						}
-						return true;
-					}
-					prev2 = cur2;
-					cur2 = cur2->next;
-				}
+				return true;
 			}
 			prev = cur;
 			cur = cur->next;
@@ -160,17 +125,7 @@ public:
 			if (edge->vertex == v2)
 			{
 				edge->data = data;
-				Edge *edge2 = vertices[v2];
-				while (edge2 != nullptr)
-				{
-					if (edge2->vertex == v1)
-					{
-						edge2->data = data;
-						return true;
-					}
-					edge2 = edge2->next;
-				}
-				break;
+				return true;
 			}
 			edge = edge->next;
 		}
@@ -190,6 +145,29 @@ public:
 			std::cout << std::endl;
 		}
 	};
+	W **getMatrix()
+	{
+		W **matr = new W*[countVertex];
+		for (int i = 0; i < countVertex; i++)
+		{
+			matr[i] = new W[countVertex];
+			for (int j = 0; j < countVertex; j++)
+			{
+				if (i == j)
+					matr[i][j] = (W)0;
+				else
+					matr[i][j] = MAX_WEIGHT;
+			}
+			Edge *edge = vertices[i];
+			while (edge != nullptr)
+			{
+				int j = edge->vertex;
+				matr[i][j] = edge->weight;
+				edge = edge->next;
+			}
+		}
+		return matr;
+	}
 	Graph(int countVertex)
 	{
 		this->countVertex = countVertex;

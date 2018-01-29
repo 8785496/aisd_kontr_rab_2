@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "graph.h"
+#include "task.h"
 
 using namespace std;
 
@@ -17,13 +18,16 @@ int main()
 	cout << "  5 - наличие ребра" << endl;
 	cout << "  6 - задать параметр ребру" << endl;
 	cout << "  7 - вывести структуру графа" << endl;
-	cout << "  8 - заполнить граф тестовыми данными" << endl << endl;
+	cout << "  8 - заполнить граф тестовыми данными" << endl;
+	cout << "  9 - центр графа" << endl << endl;
 
-	Graph<int, int> graph(10);
+	Graph<int, int> graph(5);
+	int command, v1, v2, weight, data;
+	int **m;
+	Task *task;
 	while (true)
 	{
 		cout << ">> ";
-		int command, v1, v2, weight, data;
 		cin >> command;
 		switch (command)
 		{
@@ -60,9 +64,20 @@ int main()
 			graph.printStructure();
 			break;
 		case 8:
-			graph.insert(0, 5, 10);
-			graph.insert(0, 9, 3);
+			graph.insert(0, 1, 3);
+			graph.insert(0, 2, 8);
+			graph.insert(0, 4, -4);
+			graph.insert(1, 3, 1);
+			graph.insert(1, 4, 7);
+			graph.insert(2, 1, 4);
+			graph.insert(3, 2, -5);
+			graph.insert(4, 3, 6);
 			graph.printStructure();
+			break;
+		case 9:
+			cout << "Центр графа:" << endl;
+			task = new Task(&graph);
+			task->run();
 			break;
 		default:
 			cout << "Команда не найдена" << endl;
