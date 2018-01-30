@@ -20,7 +20,6 @@ private:
 		{};
 		~Edge()
 		{
-			std::cout << "~Edge ";
 			delete next;
 		};
 	};

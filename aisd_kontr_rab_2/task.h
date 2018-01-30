@@ -30,12 +30,6 @@ private:
 		}
 		return d;
 	}
-	//int min(int a, int b, int c)
-	//{
-	//	if (b >= graph->MAX_WEIGHT || c >= graph->MAX_WEIGHT)
-	//		return a;
-
-	//}
 	void print(int **matr)
 	{
 		for (int i = 0; i < graph->v(); i++)
@@ -51,12 +45,64 @@ private:
 		}
 	}
 public:
-	void run()
+	int *run(int &n)
 	{
-		int **matr0 = graph->getMatrix();
-		print(matr0);
-		std::cout << std::endl;
-		print(floyd());
+		int **matr = floyd();
+		int *maxExs = new int[graph->v()];
+
+		if (graph->v() < 2)
+			return 0;
+
+		for (int i = 0; i < graph->v(); i++)
+		{
+			maxExs[i] = graph->MAX_WEIGHT;
+			for (int j = 0; j < graph->v(); j++)
+			{
+				if (matr[i][j] != graph->MAX_WEIGHT)
+				{
+					maxExs[i] = matr[i][j];
+					break;
+				}
+			}
+			for (int j = 1; j < graph->v(); j++)
+			{
+				if (matr[i][j] >= graph->MAX_WEIGHT)
+					continue;
+				if (matr[i][j] > maxExs[i])
+					maxExs[i] = matr[i][j];
+			}
+		}
+		// ищем минимальный эксцентриситет
+		int minEx = maxExs[0];
+		for (int i = 1; i < graph->v(); i++)
+		{
+			if (maxExs[i] >= graph->MAX_WEIGHT)
+				continue;
+			if (maxExs[i] < minEx)
+			{
+				minEx = maxExs[i];
+			}
+		}
+		// определяем количество минимальных эксцентриситетов
+		n = 0;
+		int *temp = new int[graph->v()];
+		for (int i = 0; i < graph->v(); i++)
+		{
+			if (maxExs[i] == minEx)
+			{
+				temp[n] = i;
+				n++;
+			}
+		}
+		// заполняем массив центра
+		int *center = new int[n];
+		for (int i = 0; i < n; i++)
+		{
+			center[i] = temp[i];
+		}
+		delete[] maxExs;
+		delete[] temp;
+		return center;
 	};
 	Task(Graph<int, int> *graph)
 	{

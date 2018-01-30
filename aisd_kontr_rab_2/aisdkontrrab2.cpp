@@ -24,6 +24,8 @@ int main()
 	Graph<int, int> graph(5);
 	int command, v1, v2, weight, data;
 	int **m;
+	int n;
+	int *center;
 	Task *task;
 	while (true)
 	{
@@ -64,20 +66,24 @@ int main()
 			graph.printStructure();
 			break;
 		case 8:
-			graph.insert(0, 1, 3);
-			graph.insert(0, 2, 8);
-			graph.insert(0, 4, -4);
-			graph.insert(1, 3, 1);
-			graph.insert(1, 4, 7);
-			graph.insert(2, 1, 4);
-			graph.insert(3, 2, -5);
-			graph.insert(4, 3, 6);
+			graph.insert(0, 1, 1);
+			graph.insert(1, 2, 2);
+			graph.insert(2, 3, 4);
+			graph.insert(2, 4, 2);
+			graph.insert(3, 4, 5);
+			graph.insert(4, 2, 3);
+			graph.insert(4, 1, 1);
 			graph.printStructure();
 			break;
 		case 9:
 			cout << "Центр графа:" << endl;
 			task = new Task(&graph);
-			task->run();
+			center = task->run(n);
+			for (int x = 0; x < n; x++)
+			{
+				cout << center[x] << ' ';
+			}
+			cout << endl;
 			break;
 		default:
 			cout << "Команда не найдена" << endl;
